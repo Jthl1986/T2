@@ -10,8 +10,6 @@ import requests
 import streamlit.components.v1 as components
 import json
 import openpyxl
-import weasyprint
-
 
 st.set_page_config(page_title="AgroAppCredicoop",page_icon="🌱",layout="wide") 
 
@@ -363,17 +361,6 @@ def app5():
         st.subheader("🐮 Existencias de hacienda")
         st.table(dfa.style.format({"Cantidad":"{:.0f}", "Peso":"{:.0f}", "Valuación":"${:,}"}))
         
-    if st.button("Descargar PDF"):
-        # Generar archivo PDF con información de la página actual
-        pdf_bytes = weasyprint.HTML(string=st._get_streamlit_html()).write_pdf()
-    
-        # Descargar archivo PDF
-        st.download_button(
-            label="Descargar PDF",
-            data=pdf_bytes,
-            file_name="cuadro_resumen.pdf",
-            mime="application/pdf"
-        )
 
         
 #configuraciones de página   
