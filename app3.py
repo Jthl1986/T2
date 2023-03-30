@@ -398,7 +398,7 @@ def app5():
         
         pdfButton.innerText = 'Creating PDF...';
         
-        html2canvas(stApp, {{ allowTaint: true, scale: 2 }}).then(function (canvas) {{
+        html2canvas(stApp, {{ allowTaint: true, scale: 3 }}).then(function (canvas) {{
         
             canvas.getContext('2d');
             let imgData = canvas.toDataURL("image/jpeg", 1.0);
