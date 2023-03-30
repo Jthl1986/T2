@@ -341,25 +341,26 @@ def app4():
 
 def app5():
     st.header("Cuadro resumen")
+    left, right = st.columns(2)
     css()
-    
+   
     # Obtener los dataframes existentes o None si no existen
     dfs = getattr(st.session_state, 'dfs', None)
     dfx = getattr(st.session_state, 'dfx', None)
     dfa = getattr(st.session_state, 'dfa', None)
-    
+   
     # Mostrar las tablas si los dataframes existen
     if dfs is not None:
-        st.subheader("🌾 Existencias de granos")
-        st.table(dfs.style.format({"Cantidad (tn)":"{:.0f}", "Valuación":"${:,}"}))
-        
+        left.subheader("🌾 Existencias de granos")
+        left.table(dfs.style.format({"Cantidad (tn)":"{:.0f}", "Valuación":"${:,}"}))
+       
     if dfx is not None:
-        st.subheader("🚜 Ingresos Servicios agrícolas")
-        st.table(dfx.style.format({"Superficie(ha)":"{:.0f}", "Precio":"${:,}", "Ingreso estimado":"${:,}"}))
-    
+        left.subheader("🚜 Ingresos Servicios agrícolas")
+        left.table(dfx.style.format({"Superficie(ha)":"{:.0f}", "Precio":"${:,}", "Ingreso estimado":"${:,}"}))
+   
     if dfa is not None:
-        st.subheader("🐮 Existencias de hacienda")
-        st.table(dfa.style.format({"Cantidad":"{:.0f}", "Peso":"{:.0f}", "Valuación":"${:,}"}))
+        right.subheader("🐮 Existencias de hacienda")
+        right.table(dfa.style.format({"Cantidad":"{:.0f}", "Peso":"{:.0f}", "Valuación":"${:,}"}))
         
 
         
