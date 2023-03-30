@@ -391,7 +391,7 @@ def app5():
         
         let topLeftMargin = 30;
         let pdfWidth = docHeight + (topLeftMargin * 17);
-        let pdfHeight = (pdfWidth * 1.5) + (topLeftMargin * 0.5);
+        let pdfHeight = (pdfWidth * 1.0) + (topLeftMargin * 2);
         let canvasImageWidth = docWidth;
         let canvasImageHeight = docHeight;
         
