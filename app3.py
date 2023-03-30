@@ -371,6 +371,7 @@ def app5():
         right.subheader("🐮 Existencias de hacienda")
         right.table(dfa.style.format({"Cantidad":"{:.0f}", "Peso":"{:.0f}", "Valuación":"${:,}"}))
     #topLeftMargin * 20 es donde manejas el ancho
+    #allowTaint: true, scale: 3  es la definicion
     if st.button(BUTTON_TEXT):
         components.html(
                 f"""
@@ -390,7 +391,7 @@ def app5():
         
         let topLeftMargin = 30;
         let pdfWidth = docHeight + (topLeftMargin * 17);
-        let pdfHeight = (pdfWidth * 1.5) + (topLeftMargin * 2);
+        let pdfHeight = (pdfWidth * 1.5) + (topLeftMargin * 0.5);
         let canvasImageWidth = docWidth;
         let canvasImageHeight = docHeight;
         
