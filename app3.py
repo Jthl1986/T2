@@ -401,7 +401,7 @@ def app5():
         html2canvas(stApp, {{ allowTaint: true }}).then(function (canvas) {{
         
             canvas.getContext('2d');
-            let imgData = canvas.toDataURL("image/jpeg", 1.0);
+            let imgData = canvas.toDataURL("image/jpeg", 0.8);
         
             let pdf = new jsPDF('p', 'px', [pdfWidth, pdfHeight]);
             pdf.addImage(imgData, 'JPG', topLeftMargin, topLeftMargin, canvasImageWidth, canvasImageHeight);
