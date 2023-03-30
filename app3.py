@@ -388,7 +388,7 @@ def app5():
         const docHeight = stApp.scrollHeight;
         const docWidth = stApp.scrollWidth;
         
-        let topLeftMargin = 140;
+        let topLeftMargin = 30;
         let pdfWidth = docHeight + (topLeftMargin * 2);
         let pdfHeight = (pdfWidth * 1) + (topLeftMargin * 1);
         let canvasImageWidth = docWidth;
