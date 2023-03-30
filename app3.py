@@ -373,7 +373,7 @@ def app5():
     #topLeftMargin * 20 es donde manejas el ancho
     if st.button(BUTTON_TEXT):
         components.html(
-                    f"""
+                f"""
         <script>{HTML_2_CANVAS}</script>
         <script>{JSPDF}</script>
         <script>
@@ -398,7 +398,7 @@ def app5():
         
         pdfButton.innerText = 'Creating PDF...';
         
-        html2canvas(stApp, {{ allowTaint: true }}).then(function (canvas) {{
+        html2canvas(stApp, {{ allowTaint: true, scale: 2 }}).then(function (canvas) {{
         
             canvas.getContext('2d');
             let imgData = canvas.toDataURL("image/jpeg", 1.0);
