@@ -357,19 +357,26 @@ def app5():
     dfs = getattr(st.session_state, 'dfs', None)
     dfx = getattr(st.session_state, 'dfx', None)
     dfa = getattr(st.session_state, 'dfa', None)
+    dfp = getattr(st.session_state, 'dfp', None)
    
     # Mostrar las tablas si los dataframes existen
     if dfs is not None:
-        left.subheader("🌾 Existencias de granos")
-        left.table(dfs.style.format({"Cantidad (tn)":"{:.0f}", "Valuación":"${:,}"}))
+        right.subheader("🌾 Existencias de granos")
+        right.table(dfs.style.format({"Cantidad (tn)":"{:.0f}", "Valuación":"${:,}"}))
        
     if dfx is not None:
-        left.subheader("🚜 Ingresos Servicios agrícolas")
-        left.table(dfx.style.format({"Superficie(ha)":"{:.0f}", "Precio":"${:,}", "Ingreso estimado":"${:,}"}))
+        right.subheader("🚜 Ingresos Servicios agrícolas")
+        right.table(dfx.style.format({"Superficie(ha)":"{:.0f}", "Precio":"${:,}", "Ingreso estimado":"${:,}"}))
    
     if dfa is not None:
         right.subheader("🐮 Existencias de hacienda")
         right.table(dfa.style.format({"Cantidad":"{:.0f}", "Peso":"{:.0f}", "Valuación":"${:,}"}))
+        
+    if dfp is not None:
+        left.subheader("🌽 Planteo productivo")
+        left.table(dfa.style.format({"Superficie (has)":"{:.0f}", "Valor":"${:,}"}))        
+        
+        
     #topLeftMargin * 20 es donde manejas el ancho
     #allowTaint: true, scale: 3  es la definicion
     if st.button(BUTTON_TEXT):
@@ -391,7 +398,7 @@ def app5():
         
         let topLeftMargin = 30;
         let pdfWidth = docHeight + (topLeftMargin * 17);
-        let pdfHeight = (pdfWidth * 1.0) + (topLeftMargin * 2);
+        let pdfHeight = (pdfWidth * 1.5) + (topLeftMargin * 2);
         let canvasImageWidth = docWidth;
         let canvasImageHeight = docHeight;
         
