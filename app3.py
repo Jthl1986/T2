@@ -374,7 +374,7 @@ def app5():
         
     if dfp is not None:
         left.subheader("🌽 Planteo productivo")
-        left.table(dfa.style.format({"Superficie (has)":"{:.0f}", "Valor":"${:,}"}))        
+        left.table(dfp.style.format({"Superficie (has)":"{:.0f}", "Valor":"${:,}"}))        
         
         
     #topLeftMargin * 20 es donde manejas el ancho
