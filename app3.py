@@ -399,7 +399,7 @@ def app5():
         const contentHeight = Math.max(...elementRects.map(rect => rect.bottom));
         const contentWidth = Math.max(...elementRects.map(rect => rect.right));
         
-        let topLeftMargin = 30;
+        let topLeftMargin = 15;
         let pdfWidth = contentWidth + (topLeftMargin * 2);
         let pdfHeight = contentHeight + (topLeftMargin * 2);
         let canvasImageWidth = contentWidth;
