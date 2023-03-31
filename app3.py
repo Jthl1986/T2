@@ -376,15 +376,6 @@ def app5():
         left.subheader("🌽 Planteo productivo")
         left.table(dfp.style.format({"Superficie (has)":"{:.0f}", "Valor":"${:,}"}))        
         
-        # Obtener el ancho de la tabla
-    table_width = left._parent.container_width - 50  # Restar los márgenes
-    
-    # Ajustar los márgenes y tamaño del PDF y la imagen de canvas
-    topLeftMargin = 30
-    pdfWidth = table_width + topLeftMargin * 2
-    pdfHeight = st.session_state.docHeight + topLeftMargin * 2
-    canvasImageWidth = table_width + topLeftMargin * 2
-    canvasImageHeight = st.session_state.docHeight + topLeftMargin * 2
     
     #topLeftMargin * 20 es donde manejas el ancho
     #allowTaint: true, scale: 3  es la definicion
