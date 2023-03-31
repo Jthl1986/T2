@@ -382,50 +382,47 @@ def app5():
     if st.button(BUTTON_TEXT):
         components.html(
                 f"""
-       <script>{HTML_2_CANVAS}</script>
-        <script>{JSPDF}</script>
-        <script>
-        const html2canvas = window.html2canvas
-        const {{ jsPDF }} = window.jspdf
-        
-        const streamlitDoc = window.parent.document;
-        const stApp = streamlitDoc.querySelector('.main > .block-container');
-        
-        const buttons = Array.from(streamlitDoc.querySelectorAll('.stButton > button'));
-        const pdfButton = buttons.find(el => el.innerText === '{BUTTON_TEXT}');
-        
-        const elements = Array.from(stApp.querySelectorAll('*'));
-        const elementRects = elements.map(el => el.getBoundingClientRect());
-        const contentHeight = Math.max(...elementRects.map(rect => rect.bottom));
-        const contentWidth = Math.max(...elementRects.map(rect => rect.right));
-        
-        let topLeftMargin = 30;
-        let pdfWidth = contentWidth + (topLeftMargin * 2);
-        let pdfHeight = contentHeight + (topLeftMargin * 20);
-        let canvasImageWidth = contentWidth;
-        let canvasImageHeight = contentHeight;
-        
-        let totalPDFPages = Math.ceil(contentHeight / pdfHeight)-1;
-        
-        pdfButton.innerText = 'Creating PDF...';
-        
-        html2canvas(stApp, {{ allowTaint: true, scale: 3 }}).then(function (canvas) {{
-        
-            canvas.getContext('2d');
-            let imgData = canvas.toDataURL("image/jpeg", 1.0);
-        
-            let pdf = new jsPDF('p', 'px', [pdfWidth, pdfHeight]);
-            pdf.addImage(imgData, 'JPG', topLeftMargin, topLeftMargin, canvasImageWidth, canvasImageHeight);
-        
-            for (var i = 1; i <= totalPDFPages; i++) {{
-                pdf.addPage();
-                pdf.addImage(imgData, 'JPG', topLeftMargin, -(pdfHeight * i) + (topLeftMargin*4), canvasImageWidth, canvasImageHeight);
-            }}
-        
-            pdf.save('test.pdf');
-            pdfButton.innerText = '{BUTTON_TEXT}';
-        }})
-        </script>
+        <script>{HTML_2_CANVAS}</script>
+        <script>{JSPDF}</script>
+        <script>
+        const html2canvas = window.html2canvas
+        const {{ jsPDF }} = window.jspdf
+        
+        const streamlitDoc = window.parent.document;
+        const stApp = streamlitDoc.querySelector('.main > .block-container');
+        
+        const buttons = Array.from(streamlitDoc.querySelectorAll('.stButton > button'));
+        const pdfButton = buttons.find(el => el.innerText === '{BUTTON_TEXT}');
+        const docHeight = stApp.scrollHeight;
+        const docWidth = stApp.scrollWidth;
+        
+        let topLeftMargin = 30;
+        let pdfWidth = docHeight + (topLeftMargin * 17);
+        let pdfHeight = (pdfWidth * 1.5) + (topLeftMargin * 2);
+        let canvasImageWidth = docWidth;
+        let canvasImageHeight = docHeight;
+        
+        let totalPDFPages = Math.ceil(docHeight / pdfHeight)-1;
+        
+        pdfButton.innerText = 'Creating PDF...';
+        
+        html2canvas(stApp, {{ allowTaint: true, scale: 3 }}).then(function (canvas) {{
+        
+            canvas.getContext('2d');
+            let imgData = canvas.toDataURL("image/jpeg", 1.0);
+        
+            let pdf = new jsPDF('p', 'px', [pdfWidth, pdfHeight]);
+            pdf.addImage(imgData, 'JPG', topLeftMargin, topLeftMargin, canvasImageWidth, canvasImageHeight);
+        
+            for (var i = 1; i <= totalPDFPages; i++) {{
+                pdf.addPage();
+                pdf.addImage(imgData, 'JPG', topLeftMargin, -(pdfHeight * i) + (topLeftMargin*4), canvasImageWidth, canvasImageHeight);
+            }}
+        
+            pdf.save('test.pdf');
+            pdfButton.innerText = '{BUTTON_TEXT}';
+        }})
+        </script>
         """,
                     height=0,
                     width=0,
