@@ -393,16 +393,19 @@ def app5():
         
         const buttons = Array.from(streamlitDoc.querySelectorAll('.stButton > button'));
         const pdfButton = buttons.find(el => el.innerText === '{BUTTON_TEXT}');
-        const docHeight = stApp.scrollHeight;
-        const docWidth = stApp.scrollWidth;
+        
+        const elements = Array.from(stApp.querySelectorAll('*'));
+        const elementRects = elements.map(el => el.getBoundingClientRect());
+        const contentHeight = Math.max(...elementRects.map(rect => rect.bottom));
+        const contentWidth = Math.max(...elementRects.map(rect => rect.right));
         
         let topLeftMargin = 30;
-        let pdfWidth = docHeight + (topLeftMargin * 17);
-        let pdfHeight = (pdfWidth * 1.5) + (topLeftMargin * 2);
-        let canvasImageWidth = docWidth;
-        let canvasImageHeight = docHeight;
+        let pdfWidth = contentWidth + (topLeftMargin * 2);
+        let pdfHeight = contentHeight + (topLeftMargin * 2);
+        let canvasImageWidth = contentWidth;
+        let canvasImageHeight = contentHeight;
         
-        let totalPDFPages = Math.ceil(docHeight / pdfHeight)-1;
+        let totalPDFPages = Math.ceil(contentHeight / pdfHeight)-1;
         
         pdfButton.innerText = 'Creating PDF...';
         
