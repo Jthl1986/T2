@@ -376,57 +376,74 @@ def app5():
         left.subheader("🌽 Planteo productivo")
         left.table(dfp.style.format({"Superficie (has)":"{:.0f}", "Valor":"${:,}"}))        
         
-        
-    #topLeftMargin * 20 es donde manejas el ancho
-    #allowTaint: true, scale: 3  es la definicion
+        # Obtener el ancho de la tabla
+    table_width = left._parent.container_width - 50  # Restar los márgenes
+    
+    # Ajustar los márgenes y tamaño del PDF y la imagen de canvas
+    # Ajustar los márgenes y tamaño del PDF y la imagen de canvas
+    topLeftMargin = 30
+    pdfWidth = table_width + topLeftMargin * 2
+    pdfHeight = st.session_state.docHeight + topLeftMargin * 2
+    canvasImageWidth = table_width + topLeftMargin * 2
+    canvasImageHeight = st.session_state.docHeight + topLeftMargin * 2
+    
+    # Actualizar los estilos de la página
+    st.write(f"""<style>
+    .block-container {{
+        max-width: unset !important;
+    }}
+    .main > div {{
+        padding: 0px !important;
+        margin: 0px !important;
+    }}
+    </style>""", unsafe_allow_html=True)
+    
     if st.button(BUTTON_TEXT):
         components.html(
-                f"""
-        <script>{HTML_2_CANVAS}</script>
-        <script>{JSPDF}</script>
-        <script>
-        const html2canvas = window.html2canvas
-        const {{ jsPDF }} = window.jspdf
-        
-        const streamlitDoc = window.parent.document;
-        const stApp = streamlitDoc.querySelector('.main > .block-container');
-        
-        const buttons = Array.from(streamlitDoc.querySelectorAll('.stButton > button'));
-        const pdfButton = buttons.find(el => el.innerText === '{BUTTON_TEXT}');
-        const docHeight = stApp.scrollHeight;
-        const docWidth = stApp.scrollWidth;
-        
-        let topLeftMargin = 30;
-        let pdfWidth = docHeight + (topLeftMargin * 15);
-        let pdfHeight = docHeight + (topLeftMargin * 2);
-        let canvasImageWidth = docWidth;
-        let canvasImageHeight = docHeight;
-        
-        let totalPDFPages = Math.ceil(docHeight / pdfHeight)-1;
-        
-        pdfButton.innerText = 'Creating PDF...';
-        
-        html2canvas(stApp, {{ allowTaint: true, scale: 3 }}).then(function (canvas) {{
-        
-            canvas.getContext('2d');
-            let imgData = canvas.toDataURL("image/jpeg", 1.0);
-        
-            let pdf = new jsPDF('p', 'px', [pdfWidth, pdfHeight]);
-            pdf.addImage(imgData, 'JPG', topLeftMargin, topLeftMargin, canvasImageWidth, canvasImageHeight);
-        
-            for (var i = 1; i <= totalPDFPages; i++) {{
-                pdf.addPage();
-                pdf.addImage(imgData, 'JPG', topLeftMargin, -(pdfHeight * i) + (topLeftMargin*4), canvasImageWidth, canvasImageHeight);
-            }}
-        
-            pdf.save('test.pdf');
-            pdfButton.innerText = '{BUTTON_TEXT}';
-        }})
-        </script>
-        """,
-                    height=0,
-                    width=0,
-                )
+            f"""
+            <script>{HTML_2_CANVAS}</script>
+            <script>{JSPDF}</script>
+            <script>
+            const html2canvas = window.html2canvas
+            const {{ jsPDF }} = window.jspdf
+            
+            const streamlitDoc = window.parent.document;
+            const stApp = streamlitDoc.querySelector('.main > .block-container');
+            
+            const buttons = Array.from(streamlitDoc.querySelectorAll('.stButton > button'));
+            const pdfButton = buttons.find(el => el.innerText === '{BUTTON_TEXT}');
+            const docHeight = stApp.scrollHeight;
+            const docWidth = stApp.scrollWidth;
+    
+            // Ajustar el tamaño del canvas y crear la imagen
+            const canvasImage = document.createElement('canvas');
+            canvasImage.width = canvasImageWidth;
+            canvasImage.height = canvasImageHeight;
+            html2canvas(stApp, {{
+                canvas: canvasImage,
+                allowTaint: true,
+                useCORS: true,
+            }}).then(canvas => {{
+                const imgData = canvas.toDataURL('image/png', 1.0);
+                
+                // Crear el PDF
+                const pdf = new jsPDF('p', 'pt', [pdfWidth, pdfHeight]);
+                pdf.text('{PDF_TITLE}', pdfWidth/2, 40, {{
+                    align: 'center',
+                }});
+                pdf.addImage(imgData, 'PNG', topLeftMargin, topLeftMargin, table_width, st.session_state.docHeight);
+                
+                // Descargar el PDF al hacer clic en el botón correspondiente
+                pdfButton.onclick = function(e) {{
+                    e.preventDefault();
+                    pdf.save('{PDF_FILENAME}');
+                }};
+            }});
+            </script>
+            """,
+            height=0,
+            scrolling=False,
+        )
 
         
 #configuraciones de página   
