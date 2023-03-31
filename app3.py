@@ -375,7 +375,8 @@ def app5():
     if dfp is not None:
         left.subheader("🌽 Planteo productivo")
         left.table(dfp.style.format({"Superficie (has)":"{:.0f}", "Valor":"${:,}"}))        
-           
+        
+        
     #topLeftMargin * 20 es donde manejas el ancho
     #allowTaint: true, scale: 3  es la definicion
     if st.button(BUTTON_TEXT):
@@ -396,8 +397,8 @@ def app5():
         const docWidth = stApp.scrollWidth;
         
         let topLeftMargin = 30;
-        let pdfWidth = docHeight + (topLeftMargin * 15);
-        let pdfHeight = docHeight + (topLeftMargin * 2);
+        let pdfWidth = docHeight + (topLeftMargin * 17);
+        let pdfHeight = (pdfWidth * 1.5) + (topLeftMargin * 2);
         let canvasImageWidth = docWidth;
         let canvasImageHeight = docHeight;
         
