@@ -375,8 +375,7 @@ def app5():
     if dfp is not None:
         left.subheader("🌽 Planteo productivo")
         left.table(dfp.style.format({"Superficie (has)":"{:.0f}", "Valor":"${:,}"}))        
-        
-    
+           
     #topLeftMargin * 20 es donde manejas el ancho
     #allowTaint: true, scale: 3  es la definicion
     if st.button(BUTTON_TEXT):
@@ -393,19 +392,16 @@ def app5():
         
         const buttons = Array.from(streamlitDoc.querySelectorAll('.stButton > button'));
         const pdfButton = buttons.find(el => el.innerText === '{BUTTON_TEXT}');
-        
-        const elements = Array.from(stApp.querySelectorAll('*'));
-        const elementRects = elements.map(el => el.getBoundingClientRect());
-        const contentHeight = Math.max(...elementRects.map(rect => rect.bottom));
-        const contentWidth = Math.max(...elementRects.map(rect => rect.right));
+        const docHeight = stApp.scrollHeight;
+        const docWidth = stApp.scrollWidth;
         
         let topLeftMargin = 30;
-        let pdfWidth = contentWidth + (topLeftMargin * 2);
-        let pdfHeight = contentHeight + (topLeftMargin * 20);
-        let canvasImageWidth = contentWidth;
-        let canvasImageHeight = contentHeight;
+        let pdfWidth = docHeight + (topLeftMargin * 15);
+        let pdfHeight = docHeight + (topLeftMargin * 2);
+        let canvasImageWidth = docWidth;
+        let canvasImageHeight = docHeight;
         
-        let totalPDFPages = Math.ceil(contentHeight / pdfHeight)-1;
+        let totalPDFPages = Math.ceil(docHeight / pdfHeight)-1;
         
         pdfButton.innerText = 'Creating PDF...';
         
@@ -430,6 +426,7 @@ def app5():
                     height=0,
                     width=0,
                 )
+
         
 #configuraciones de página   
 lottie_book = load_lottieurl('https://assets7.lottiefiles.com/packages/lf20_d7OjnJ.json')
